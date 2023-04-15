@@ -59,8 +59,8 @@ jobs:
       - run:
           name: upload-image
           command: |
-            docker login -u="${DOCKER_USER}" -p="${DOCKER_PASS}"
-            docker push ${DOCKER_IMAGE}
+            docker login -u="satz0205" -p="Eduku@0205"
+            docker push capstoneproj5
 
 workflows:
   default:
