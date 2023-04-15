@@ -45,7 +45,7 @@ jobs:
               make lint 
 
   imagepush:
-    #executors: docker-publisher
+    executors: docker-publisher
     steps:
       - checkout
       - setup_remote_docker
