@@ -48,7 +48,7 @@ jobs:
     #executors: docker-publisher
     steps:
       - checkout
-      #- setup_remote_docker
+      - setup_remote_docker
       - run:
           name: docker image
           command: docker build --tag capstoneproj5 .
