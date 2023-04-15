@@ -44,6 +44,23 @@ jobs:
           command: |
             . proj5/bin/activate
               make lint 
+  
+  build-docker-image:
+    docker:
+      - image: circleci/buildpack-deps:stretch
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: build-image
+          command: |
+            sudo chmod +x run_docker.sh
+            ./run_docker.sh
+      - run:
+          name: upload-image
+          command: |
+            sudo chmod +x upload_docker.sh
+            ./upload_docker.sh
 
 workflows:
   default:
