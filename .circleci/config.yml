@@ -66,5 +66,6 @@ workflows:
   default:
     jobs:
       - buildlint
+      - build-docker-image
   
           
