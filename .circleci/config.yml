@@ -46,8 +46,6 @@ jobs:
               make lint 
 
   imagepush:
-    docker:
-      - image: circleci/buildpack-deps:stretch
     steps:
       - checkout
       - setup_remote_docker
