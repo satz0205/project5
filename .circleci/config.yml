@@ -44,7 +44,31 @@ jobs:
             . proj5/bin/activate
               make lint 
 
+  imagepush:
+    #executors: docker-publisher
+    steps:
+      - checkout
+      #- setup_remote_docker
+      - run:
+          name: docker image
+          command: docker build --tag capstoneproj5 .
+      - run:
+          name: List docker images
+          command: docker image ls
+      - run:
+          #name: Publish Docker image
+          name: Log into DockerHub
+          docker_login:
+              username: sat0205
+              password: Eduku@0205
+      -run:
+          name:
+          command:
+            docker push capstoneproj5
+
 workflows:
   default:
     jobs:
       - buildlint
+      - imagepush:
+          requires: [buildlint]
