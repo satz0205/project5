@@ -54,13 +54,13 @@ jobs:
       - run:
           name: build-image
           command: |
-            sudo chmod +x run_docker.sh
-            ./run_docker.sh
+            docker build -t capstoneproj5 .  
+            docker image ls
       - run:
           name: upload-image
           command: |
-            sudo chmod +x upload_docker.sh
-            ./upload_docker.sh
+            docker login -u="${DOCKER_USER}" -p="${DOCKER_PASS}"
+            docker push ${DOCKER_IMAGE}
 
 workflows:
   default:
