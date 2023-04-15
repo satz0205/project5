@@ -44,7 +44,7 @@ jobs:
             . venv/bin/activate
               make lint 
 
-  workflows:
+workflows:
   default:
     jobs:
       - buildlint
