@@ -47,28 +47,23 @@ jobs:
   imagepush:
     #executors: docker-publisher
     steps:
-      #- checkout
-      #- setup_remote_docker
+      - checkout
+      - setup_remote_docker
       - run:
           name: docker image
-          command: docker build --tag capstoneproj5 .
+          command: docker build --tag ${DOCKER_IMAGE} .
       - run:
           name: List docker images
           command: docker image ls
-      - run:
-          #name: Publish Docker image
-          name: Log into DockerHub
-          docker_login:
-              username: sat0205
-              password: Eduku@0205
-      -run:
-          name:
-          command:
-            docker push capstoneproj5
+     - run:
+          name: Publish Docker image
+          command: |
+            docker login -u="sat0205" -p="Eduku@0205"
+            docker push ${DOCKER_IMAGE}
 
 workflows:
   default:
     jobs:
       - buildlint
-      - imagepush:
-          requires: [buildlint]
+      - imagepush
+          
