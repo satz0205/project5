@@ -45,13 +45,14 @@ jobs:
               make lint 
 
   imagepush:
-    executor: docker-publisher
+    docker:
+      - image: circleci/buildpack-deps:stretch
     steps:
       - checkout
       - setup_remote_docker
       - run:
-          name: docker image
-          command: docker build --tag ${DOCKER_IMAGE} .
+          name: build image
+          command: docker build --tag capstoneproj5 .
       - run:
           name: List docker images
           command: docker image ls
@@ -59,7 +60,7 @@ jobs:
           name: Publish Docker image
           command: |
             docker login -u="sat0205" -p="Eduku@0205"
-            docker push ${DOCKER_IMAGE}
+            docker push capstoneproj5
 
 workflows:
   default:
