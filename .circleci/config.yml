@@ -63,6 +63,10 @@ jobs:
       steps:
         - checkout
         - run:
+            name: Install tar and gzip
+            command: |
+              apk add --update tar gzip nodejs npm curl
+        - run:
             name: eks_install
             command: |
               curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
