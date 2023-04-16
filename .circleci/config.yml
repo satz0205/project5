@@ -86,8 +86,8 @@ jobs:
       - run:
             name: AWS EKS cluster creation
             command: |
-             eksctl create cluster --name capstonepoj5 --region us-east-1  
-             eksctl get cluster --name=capstonepoj5 --region=us-east-1 
+             eksctl create cluster --name poj5 --region us-east-1  
+             eksctl get cluster --name=poj5 --region=us-east-1 
               
 
 workflows:
