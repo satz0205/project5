@@ -82,7 +82,7 @@ jobs:
         - run:
             name: AWS EKS cluster creation
             command: |
-             eksctl create cluster --name proj5cluster --region us-east-1 
+              eksctl create cluster --name proj5cluster --region us-east-1 --zones us-east-1a,us-east-1b,us-east-1c,us-east-1d  
               
         - run:
             name: AWS EKS get cluster creation
