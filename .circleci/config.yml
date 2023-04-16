@@ -89,7 +89,7 @@ jobs:
             name: proj5-cluster
             region: us-east-1
           nodeGroups:
-            - name: ng-1
+            name: nodegroup1
             instanceType: t3.micro
             desiredCapacity: 2
 
