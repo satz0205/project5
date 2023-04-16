@@ -83,7 +83,15 @@ jobs:
             chmod +x ./kubectl
             mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$PATH:$HOME/bin
             kubectl version --client
-    
+      - run:
+          - name: AWS EKS cluster creation
+            community.aws.eks_cluster:
+              name: proj5-cluster
+              region: us-east-1
+          nodeGroups:
+            name: nodegroup1
+            instanceType: t3.micro
+            desiredCapacity: 2
 
 workflows:
   default:
