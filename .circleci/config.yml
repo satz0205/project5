@@ -57,7 +57,7 @@ jobs:
             docker image tag capstoneproj5 $dockerpath
             docker push $dockerpath
 
-  cluster-creation:
+   cluster-creation:
       docker:
         - image: python:3.7-alpine3.11
       steps:
@@ -85,13 +85,13 @@ jobs:
               kubectl version --client
         - run:
             name: AWS EKS cluster creation
-            command: |
-              eksctl create cluster --name proj5cluster --region us-east-1 --zones us-east-1a,us-east-1b,us-east-1c,us-east-1d  
-              
-        - run:
-            name: AWS EKS get cluster creation
-            command: |
-              eksctl get cluster --name=proj5cluster --region=us-east-1
+            community.aws.eks_cluster:
+              name: proj5-cluster
+              region: us-east-1
+            nodeGroups:
+              - name: ng-1
+              instanceType: t3.micro
+              desiredCapacity: 2
 
 workflows:
   default:
