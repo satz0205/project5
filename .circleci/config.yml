@@ -5,15 +5,8 @@ orbs:
   kubernetes: circleci/kubernetes@1.3
   aws-cli: circleci/aws-cli@2.0.3
 
-executor:
-  docker-publisher:
-    environment:
-      DOCKER_IMAGE: satz0205/capstoneproj5:latest
-    docker:
-      - image: docker:stable
-
 jobs:
-  buildlint:
+  build-lint:
     docker:
 # Use the same Docker base as the project
       - image: python:3.7.3-stretch
@@ -45,7 +38,7 @@ jobs:
             . proj5/bin/activate
               make lint 
   
-  build-docker-image:
+  build-image:
     docker:
       - image: circleci/buildpack-deps:stretch
     steps:
@@ -64,10 +57,42 @@ jobs:
             docker image tag capstoneproj5 $dockerpath
             docker push $dockerpath
 
+  cluster-creation:
+      docker:
+        - image: python:3.7-alpine3.11
+      steps:
+        - checkout
+        - run:
+            name: eks_install
+            command: |
+              curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+              sudo mv /tmp/eksctl /usr/local/bin
+              eksctl version     
+        - run:
+            name: kubetctl_install
+            command: |
+              curl -O https://s3.us-west-2.amazonaws.com/amazon-eks/1.24.11/2023-03-17/bin/linux/amd64/kubectl
+              curl -O https://s3.us-west-2.amazonaws.com/amazon-eks/1.24.11/2023-03-17/bin/linux/amd64/kubectl.sha256
+              sha256sum -c kubectl.sha256
+              chmod +x ./kubectl
+              mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$PATH:$HOME/bin
+              kubectl version --client
+        - run:
+            name: AWS EKS cluster creation
+            command: |
+             eksctl create cluster --name proj5cluster --region us-east-1 
+              
+        - run:
+            name: AWS EKS get cluster creation
+            command: |
+              eksctl get cluster --name=proj5cluster --region=us-east-1
+
 workflows:
   default:
     jobs:
-      - buildlint
-      - build-docker-image
+    #  - build-lint
+    #  - build-image:
+    #      requires[build-lint]
+      - cluster-creation
   
           
