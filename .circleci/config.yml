@@ -12,7 +12,6 @@ jobs:
     working_directory: ~/repo
     steps:
       - checkout
-        # Download and cache dependencies
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "requirements.txt" }}
@@ -30,21 +29,19 @@ jobs:
           paths:
             - ./proj5
           key: v1-dependencies-{{ checksum "requirements.txt" }}
-      # run lint!
       - run:
           name: run lint
           command: |
             . proj5/bin/activate
               make lint 
- 
-              
+  
 
 workflows:
   default:
     jobs:
       - build-lint
       - build-image:
-          requires[build-lint]
+          requires: [build-lint]
       - cluster-creation
   
           
