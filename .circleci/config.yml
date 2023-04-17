@@ -84,6 +84,24 @@ jobs:
             command: |
              eksctl create cluster --name capstoneproj5 --region us-east-1  --zones us-east-1a,us-east-1b,us-east-1c
              eksctl get cluster --name=capstoneproj5 --region=us-east- 
+  
+  deploy:
+    docker:
+      - image: 'cimg/base:stable'
+    steps:
+      - checkout
+      - run:
+          command: |
+            pwd 
+            ls -ltra
+      - aws-eks/update-kubeconfig-with-authenticator:
+          cluster-name: eksctl-capstoneproj5-cluster
+          install-kubectl: true
+      - kubernetes/create-or-update-resource:
+          get-rollout-status: true
+          resource-file-path: deployment.yml
+          resource-name: deployment/capstoneproj5
+          show-kubectl-command: true
 
 workflows:
   default:
@@ -91,7 +109,7 @@ workflows:
     #  - build-lint
     #  - build-image:
     #      requires: [build-lint]
-      - cluster-creation
+    #  - cluster-creation
     #      requires: [build-image]
-  
+      - deploy
           
