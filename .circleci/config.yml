@@ -111,6 +111,6 @@ workflows:
           requires: [build-lint]
     #  - cluster-creation
     #      requires: [build-image]
-      - deploy
+      - deploy:
           requires: [build-image]
           
