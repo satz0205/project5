@@ -104,6 +104,8 @@ jobs:
           show-kubectl-command: true
   
   check-cluster:
+    docker:
+      - image: python:3.7-alpine3.11
     steps:
       - checkout
       - run:
