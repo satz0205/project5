@@ -50,7 +50,7 @@ jobs:
           name: upload-image
           command: |
             dockerpath=satz0205/capstoneproj5
-            docker login -u="${DOCKER_USER}" -p="${DOCKER_PASS}"
+            docker login -u="satz0205" -p="Eduku@0205"
             docker image tag capstoneproj5 $dockerpath
             docker push $dockerpath
   
