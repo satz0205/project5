@@ -35,13 +35,32 @@ jobs:
             . proj5/bin/activate 
               make lint 
   
+  build-image:
+    docker:
+      - image: circleci/buildpack-deps:stretch
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: build-image
+          command: |
+            docker build -t capstoneproj5 .  
+            docker image ls
+      - run:
+          name: upload-image
+          command: |
+            dockerpath=satz0205/capstoneproj5
+            docker login -u="satz0205" -p="Eduku@0205"
+            docker image tag capstoneproj5 $dockerpath
+            docker push $dockerpath
+  
 
 workflows:
   default:
     jobs:
       - build-lint
-    #  - build-image:
-    #      requires: [build-lint]
+      - build-image:
+          requires: [build-lint]
     #  - cluster-creation
   
           
