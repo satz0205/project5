@@ -21,7 +21,6 @@ spec:
       containers:
       - name: capstone
         image: satz0205/capstoneproj5:latest
-        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 80
 ---
