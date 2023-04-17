@@ -104,8 +104,17 @@ jobs:
           show-kubectl-command: true
   
   check-cluster:
-    docker:
-      - image: python:3.7-alpine3.11
+    executor: aws-eks/python3
+    steps:
+      - kubernetes/install
+      - aws-eks/update-kubeconfig-with-authenticator:
+          cluster-name: capstone-kk
+      - run:
+          name: kubetctl_install
+          command: |
+            curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+            install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+            kubectl version --client
     steps:
       - run:
           name: Check Cluster status
