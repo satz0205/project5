@@ -99,7 +99,6 @@ jobs:
           show-kubectl-command: true
   
   check-cluster:
-    executor: aws-eks
     steps:
       - kubernetes/install
       - aws-eks/update-kubeconfig-with-authenticator:
