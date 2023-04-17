@@ -50,7 +50,7 @@ jobs:
           name: upload-image
           command: |
             dockerpath=satz0205/capstoneproj5
-            docker login -u="satz0205" -p="Eduku@0205"
+            docker login -u="${DOCKER_USER}" -p="${DOCKER_PASS}"
             docker image tag capstoneproj5 $dockerpath
             docker push $dockerpath
   
@@ -90,13 +90,8 @@ jobs:
       - image: 'cimg/base:stable'
     steps:
       - checkout
-      - run:
-          command: |
-            pwd 
-            ls -ltra
       - aws-eks/update-kubeconfig-with-authenticator:
           cluster-name: capstoneproj5
-          install-kubectl: true
       - kubernetes/create-or-update-resource:
           get-rollout-status: true
           resource-file-path: deployment.yml
