@@ -102,6 +102,26 @@ jobs:
           resource-file-path: deployment.yml
           resource-name: deployment/capstoneproj5
           show-kubectl-command: true
+  
+  check-cluster:
+    steps:
+      - kubernetes/install
+      - aws-eks/update-kubeconfig-with-authenticator:
+          cluster-name: capstoneproj5
+      - run:
+          name: Check Cluster status
+          command: |
+              echo '------------------Describe Deployment---------------------'
+              kubectl describe deployment capstone
+              echo '------------------Get Deployment-----------------------------'
+              kubectl get deployments
+              echo '------------------svc,nodes--------------------------------'
+              kubectl get svc
+              kubectl get nodes
+              echo '-------------------pods-------------------------------------'
+              kubectl get pods --all-namespaces
+              echo '-------------------config view------------------------------'
+              kubectl config view 
             
 workflows:
   default:
@@ -111,7 +131,8 @@ workflows:
     #      requires: [build-lint]
     #  - cluster-creation:
     #      requires: [build-image]
-      - deploy
+    # - deploy
     #      requires: [cluster-creation]
+      - check-cluster
      
           
