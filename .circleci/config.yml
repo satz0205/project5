@@ -97,15 +97,32 @@ jobs:
           resource-file-path: deployment.yml
           resource-name: deployment/capstoneproj5
           show-kubectl-command: true
+  
+  check-cluster:
+    executor: aws-eks/python3
+    steps:
+      - kubernetes/install
+      - aws-eks/update-kubeconfig-with-authenticator:
+          cluster-name: capstoneproj5
+      - run:
+          name: Check Cluster status
+          command: |
+              kubectl get nodes
+              kubectl create deploy python-helloworld --image=satz0205/capstoneproj5:latest
+              # See the status
+              kubectl get deploy,rs,svc,pods
+              # Port forward 
+              # kubectl port-forward pod/python-helloworld-84857d9565-2598m --address 0.0.0.0 80:5000
 
 workflows:
   default:
     jobs:
-      - build-lint
-      - build-image:
-          requires: [build-lint]
+    #  - build-lint
+    #  - build-image:
+    #      requires: [build-lint]
     #  - cluster-creation
     #      requires: [build-image]
-      - deploy:
-          requires: [build-image]
+    #  - deploy:
+    #      requires: [build-image]
+      - check-cluster
           
