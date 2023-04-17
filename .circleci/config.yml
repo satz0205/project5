@@ -75,10 +75,10 @@ jobs:
       - run:
           name: kubetctl_install
           command: |
-            curl -O https://s3.us-west-2.amazonaws.com/amazon-eks/1.24.11/2023-03-17/bin/linux/amd64/kubectl
-            chmod +x ./kubectl
-            mv ./kubectl /usr/local/bin
+            curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+            install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
             kubectl version --client
+            
       - run:
             name: ekscluster_creation
             command: |
@@ -101,12 +101,12 @@ jobs:
 workflows:
   default:
     jobs:
-    #  - build-lint
-    #  - build-image:
-    #      requires: [build-lint]
-    #  - cluster-creation
-    #      requires: [build-image]
-      - deploy
-    #      requires: [build-image]
+      - build-lint
+      - build-image:
+          requires: [build-lint]
+      - cluster-creation:
+          requires: [build-image]
+      - deploy:
+          requires: [cluster-creation]
      
           
