@@ -99,19 +99,17 @@ jobs:
           show-kubectl-command: true
   
   check-cluster:
+    docker:
+      - image: 'cimg/base:stable'
     steps:
       - kubernetes/install
-      - aws-eks/update-kubeconfig-with-authenticator:
-          cluster-name: capstoneproj5
       - run:
-          name: Check Cluster status
-          command: |
+            name: Check Cluster status
+            command: |
               kubectl get nodes
               kubectl create deploy python-helloworld --image=satz0205/capstoneproj5:latest
-              # See the status
               kubectl get deploy,rs,svc,pods
-              # Port forward 
-              # kubectl port-forward pod/python-helloworld-84857d9565-2598m --address 0.0.0.0 80:5000
+            
 
 workflows:
   default:
