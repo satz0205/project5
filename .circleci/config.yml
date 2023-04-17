@@ -40,8 +40,8 @@ workflows:
   default:
     jobs:
       - build-lint
-      - build-image:
-          requires: [build-lint]
-      - cluster-creation
+    #  - build-image:
+    #      requires: [build-lint]
+    #  - cluster-creation
   
           
