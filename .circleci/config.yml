@@ -113,12 +113,6 @@ jobs:
       - aws-eks/update-kubeconfig-with-authenticator:
           cluster-name: capstoneproj5
       - run:
-          name: kubetctl_install
-          command: |
-            curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-            install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
-            kubectl version --client
-      - run:
           name: Check Cluster status
           command: |
             echo '------------------Describe Deployment---------------------'
@@ -141,9 +135,9 @@ workflows:
     #      requires: [build-lint]
     #  - cluster-creation:
     #      requires: [build-image]
-      - deploy
+    #  - deploy
     #      requires: [cluster-creation]
-      - check-cluster:
-          requires: [deploy]
+      - check-cluster
+    #      requires: [deploy]
      
           
