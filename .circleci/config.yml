@@ -105,9 +105,7 @@ jobs:
   
   check-cluster:
     steps:
-      - kubernetes/install
-      - aws-eks/update-kubeconfig-with-authenticator:
-          cluster-name: capstoneproj5
+      - checkout
       - run:
           name: Install tar and gzip
           command: |
