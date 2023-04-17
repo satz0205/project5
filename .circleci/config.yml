@@ -107,7 +107,6 @@ jobs:
     docker:
       - image: python:3.7-alpine3.11
     steps:
-      - checkout
       - run:
           name: Check Cluster status
           command: |
