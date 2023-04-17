@@ -97,29 +97,16 @@ jobs:
           resource-file-path: deployment.yml
           resource-name: deployment/capstoneproj5
           show-kubectl-command: true
-  
-  check-cluster:
-    docker:
-      - image: 'cimg/base:stable'
-    steps:
-      - kubernetes/install
-      - run:
-            name: Check Cluster status
-            command: |
-              kubectl get nodes
-              kubectl create deploy python-helloworld --image=satz0205/capstoneproj5:latest
-              kubectl get deploy,rs,svc,pods
             
-
 workflows:
   default:
     jobs:
-    #  - build-lint
-    #  - build-image:
-    #      requires: [build-lint]
+      - build-lint
+      - build-image:
+          requires: [build-lint]
     #  - cluster-creation
     #      requires: [build-image]
-    #  - deploy:
-    #      requires: [build-image]
-      - check-cluster
+      - deploy:
+          requires: [build-image]
+     
           
