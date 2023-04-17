@@ -107,14 +107,11 @@ jobs:
           resource-name: service/capstoneproj5
   
   check-cluster:
-    docker:
-      - image: python:3.7-alpine3.11
+    executor: aws-eks/python3
     steps:
-      - checkout
-      - run:
-          name: Install tar and gzip
-          command: | 
-            apk add --update tar gzip nodejs npm curl 
+      - kubernetes/install
+      - aws-eks/update-kubeconfig-with-authenticator:
+          cluster-name: capstoneproj5
       - run:
           name: kubetctl_install
           command: |
