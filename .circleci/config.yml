@@ -107,7 +107,7 @@ jobs:
     docker:
       - image: python:3.7-alpine3.11
     steps:
-      - kubernetes/install
+      - checkout
       - run:
           name: Check Cluster status
           command: |
