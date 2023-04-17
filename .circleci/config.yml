@@ -95,7 +95,7 @@ jobs:
             pwd 
             ls -ltra
       - aws-eks/update-kubeconfig-with-authenticator:
-          cluster-name: eksctl-capstoneproj5-cluster
+          cluster-name: capstoneproj5
           install-kubectl: true
       - kubernetes/create-or-update-resource:
           get-rollout-status: true
