@@ -119,17 +119,17 @@ jobs:
       - run:
           name: Check Cluster status
           command: |
-              echo '------------------Describe Deployment---------------------'
-              kubectl describe deployment capstone
-              echo '------------------Get Deployment-----------------------------'
-              kubectl get deployments
-              echo '------------------svc,nodes--------------------------------'
-              kubectl get svc
-              kubectl get nodes
-              echo '-------------------pods-------------------------------------'
-              kubectl get pods --all-namespaces
-              echo '-------------------config view------------------------------'
-              kubectl config view 
+            echo '------------------Describe Deployment---------------------'
+            kubectl describe deployment capstone
+            echo '------------------Get Deployment-----------------------------'
+            kubectl get deployments
+            echo '------------------svc,nodes--------------------------------'
+            kubectl get svc
+            kubectl get nodes
+            echo '-------------------pods-------------------------------------'
+            kubectl get pods --all-namespaces
+            echo '-------------------config view------------------------------'
+            kubectl config view 
             
 workflows:
   default:
