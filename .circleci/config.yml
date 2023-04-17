@@ -90,8 +90,13 @@ jobs:
       - image: 'cimg/base:stable'
     steps:
       - checkout
+      - run:
+          command: |
+            pwd 
+            ls -ltra
       - aws-eks/update-kubeconfig-with-authenticator:
           cluster-name: capstoneproj5
+          install-kubectl: true
       - kubernetes/create-or-update-resource:
           get-rollout-status: true
           resource-file-path: deployment.yml
@@ -101,12 +106,12 @@ jobs:
 workflows:
   default:
     jobs:
-      - build-lint
-      - build-image:
-          requires: [build-lint]
-      - cluster-creation:
-          requires: [build-image]
-      - deploy:
-          requires: [cluster-creation]
+    #  - build-lint
+    #  - build-image:
+    #      requires: [build-lint]
+    #  - cluster-creation:
+    #      requires: [build-image]
+      - deploy
+    #      requires: [cluster-creation]
      
           
