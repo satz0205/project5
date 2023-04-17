@@ -102,6 +102,9 @@ jobs:
           resource-file-path: deployment.yml
           resource-name: deployment/capstoneproj5
           show-kubectl-command: true
+      - kubernetes/create-or-update-resource:
+          resource-file-path: service.yml
+          resource-name: service/capstoneproj5
   
   check-cluster:
     docker:
@@ -141,8 +144,9 @@ workflows:
     #      requires: [build-lint]
     #  - cluster-creation:
     #      requires: [build-image]
-    # - deploy
+      - deploy
     #      requires: [cluster-creation]
-      - check-cluster
+      - check-cluster:
+          requires:[deploy]
      
           
