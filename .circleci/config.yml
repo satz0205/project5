@@ -82,15 +82,15 @@ jobs:
       - run:
             name: ekscluster_creation
             command: |
-             eksctl create cluster --name capstoneproj5 --region us-east-1  
-             eksctl get cluster --name=capstoneproj5 --region=us-east-1 
+             eksctl create cluster --name capstoneproj5 --region us-east-1  --zones us-east-1a,us-east-1b,us-east-1c
+             eksctl get cluster --name=capstoneproj5 --region=us-east- 
 
 workflows:
   default:
     jobs:
-      - build-lint
-      - build-image:
-          requires: [build-lint]
+    #  - build-lint
+    #  - build-image:
+    #      requires: [build-lint]
       - cluster-creation:
           requires: [build-image]
   
