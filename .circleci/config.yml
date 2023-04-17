@@ -111,6 +111,10 @@ jobs:
       - aws-eks/update-kubeconfig-with-authenticator:
           cluster-name: capstoneproj5
       - run:
+          name: Install tar and gzip
+          command: |
+            apk add --update tar gzip nodejs npm curl 
+      - run:
           name: kubetctl_install
           command: |
             curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
@@ -119,7 +123,6 @@ jobs:
       - run:
           name: Check Cluster status
           command: |
-              apk add --update tar gzip nodejs npm curl
               echo '------------------Describe Deployment---------------------'
               kubectl describe deployment capstone
               echo '------------------Get Deployment-----------------------------'
