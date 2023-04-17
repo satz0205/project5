@@ -112,4 +112,5 @@ workflows:
     #  - cluster-creation
     #      requires: [build-image]
       - deploy
+          requires: [build-image]
           
