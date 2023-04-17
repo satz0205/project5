@@ -54,6 +54,36 @@ jobs:
             docker image tag capstoneproj5 $dockerpath
             docker push $dockerpath
   
+  cluster-creation:
+    docker:
+      - image: python:3.7-alpine3.11
+    steps:
+      - checkout
+      - run:
+          name: install_awscli
+          command: |
+            apk add --update tar gzip nodejs npm curl
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            unzip awscliv2.zip
+            ./aws/install 
+      - run:
+          name: eks_install
+          command: |
+            curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+            mv /tmp/eksctl /usr/local/bin
+            eksctl version     
+      - run:
+          name: kubetctl_install
+          command: |
+            curl -O https://s3.us-west-2.amazonaws.com/amazon-eks/1.24.11/2023-03-17/bin/linux/amd64/kubectl
+            chmod +x ./kubectl
+            mv kubectl /usr/local/bin
+            kubectl version --client
+      - run:
+            name: ekscluster_creation
+            command: |
+             eksctl create cluster --name capstoneproj5 --region us-east-1  
+             eksctl get cluster --name=capstoneproj5 --region=us-east-1 
 
 workflows:
   default:
@@ -61,6 +91,7 @@ workflows:
       - build-lint
       - build-image:
           requires: [build-lint]
-    #  - cluster-creation
+      - cluster-creation:
+          requires: [build-image]
   
           
